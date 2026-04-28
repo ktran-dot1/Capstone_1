@@ -115,7 +115,7 @@ GROUP BY Territory, Year;
 /*What is the number of transactions per month and average transaction size by product 
 category for the sales territory?*/
 SELECT
-	DATE_FORMAT(Transaction_Date, '%Y-%m') AS 'Year-Month',
+	DATE_FORMAT(Transaction_Date, '%Y-%m') AS 'Date',
     COUNT(Transaction_Date) AS Num_of_Trans,
     ROUND(AVG(Sale_Amount), 2) AS AVG_Trans_Size,
     ic.Category
@@ -125,8 +125,25 @@ JOIN inventory_categories AS ic
 	ON products.Categoryid = ic.Categoryid
 WHERE Store_ID
 	BETWEEN 818 AND 823
-GROUP BY DATE_FORMAT(Transaction_Date, '%Y-%m'), ic.Category
+GROUP BY ic.Category, Date
 ORDER BY ic.Category;
+-- ***************************************************************** --
+/*Can you provide a ranking of in-store sales performance by each store in the sales territory, 
+or a ranking of online sales performance by state within an online sales territory?*/
+SELECT 
+	sl.StoreId,
+    sl.StoreLocation,
+    sl.State,
+    FORMAT(SUM(ss.Sale_Amount), 2) AS Performance
+FROM store_sales AS ss
+JOIN store_locations AS sl
+	ON ss.Store_ID = sl.StoreId
+WHERE sl.State = 'Maine'
+GROUP BY
+	sl.StoreId,
+	sl.StoreLocation,
+    sl.State
+ORDER BY Performance DESC;
     
 
 
