@@ -133,7 +133,7 @@ or a ranking of online sales performance by state within an online sales territo
 SELECT 
 	sl.StoreId,
     sl.StoreLocation,
-    sl.State,
+    -- sl.State,
     FORMAT(SUM(ss.Sale_Amount), 2) AS Performance
 FROM store_sales AS ss
 JOIN store_locations AS sl
@@ -141,11 +141,18 @@ JOIN store_locations AS sl
 WHERE sl.State = 'Maine'
 GROUP BY
 	sl.StoreId,
-	sl.StoreLocation,
-    sl.State
+	sl.StoreLocation
+    -- sl.State
 ORDER BY Performance DESC;
-    
-
+-- ******************************************************************* --
+/*What is your recommendation for where to focus sales attention in the next quarter?*/
+-- From my analysis, I've noticed that the store in Bar Harbor, isn't performing well.
+-- Compared to the next lowest performing store, Bangor, the difference between them is roughly
+-- $13,000 in revenue. This difference is crucial, as other stores are bringing in at least
+-- $300,000 in revenue. What I recommend to do, is to promote the sales on technology, 
+-- stationaries, apparel, and art supplies. Through my query to find the best selling products,
+-- Throughout the territory, technology, stationaries, apparel, and art supplies sold the best.
+-- They had high number of transaction and high average transaction size through the year.
 
 
 
